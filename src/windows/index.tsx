@@ -25,7 +25,7 @@ const WindowComponent: FC<Props> = ({title, features, onUnload, component, isWin
     return (
         <NewWindow
             title={title} 
-            center={false} 
+            center="screen" 
             onUnload={onUnload}
             features={{ ...features }}>
             <div>
