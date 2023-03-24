@@ -25,7 +25,8 @@ const WindowComponent: FC<Props> = ({title, features, onUnload, component, isWin
     return (
         <NewWindow
             title={title} 
-            center="screen" 
+            // @ts-expect-error
+            center={false}
             onUnload={onUnload}
             features={{ ...features }}>
             <div>
