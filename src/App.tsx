@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import { Navigate} from "react-router-dom";
 
+
 // interfaces
 import { IScreen } from "./interfaces"
 
@@ -18,7 +19,8 @@ type Form = {
   component: string;
   isWindow: string;
   size: string,
-  message: string
+  message: string,
+  savePosition: string
 };
 
 function App() {
@@ -37,7 +39,7 @@ function App() {
         const valuesForm: Form[] = [];
         data.forEach(() => {
           values.push(false);
-          valuesForm.push({ component: "red", isWindow: "yes", size: "small", message: "Hi :)" })
+          valuesForm.push({ component: "red", isWindow: "yes", size: "small", message: "Hi :)", savePosition: "yes" })
         })
         setForm(valuesForm)
         setIsOpen(values)
@@ -68,7 +70,7 @@ function App() {
 
   const onchangeForm = (index: number, attr: string, value: string) => {
     const cloneForm: Form[] = [...form];
-    if (attr === "component" || attr === "isWindow"  || attr === "size" || attr === "message" ) {
+    if (attr === "component" || attr === "isWindow"  || attr === "size" || attr === "message"  || attr === "savePosition" ) {
       cloneForm[index][attr] = value;
     }
     setForm(cloneForm);
@@ -155,14 +157,20 @@ function App() {
                   form[i].isWindow === "yes" &&
                   <>
                     <div className="flex mt-5 items-center first-letter">
-                      <label htmlFor="years" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white min-w-[110px]">Size window</label>
-                      <select id="years" onChange={(e) => onchangeForm(i, "size", e.target.value)} value={form[i].size} size={1} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                      <label htmlFor="size" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white min-w-[110px]">Size window</label>
+                      <select id="size" onChange={(e) => onchangeForm(i, "size", e.target.value)} value={form[i].size} size={1} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
                         <option value="small">400 x 400 small</option>
                         <option value="medium">600 x 600 medium</option>
                         <option value="large">Max x Max large</option>
                       </select>
                     </div>
-                   
+                    <div className="flex mt-5 items-center first-letter">
+                      <label htmlFor="position" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white min-w-[110px]">Save position</label>
+                      <select id="position" onChange={(e) => onchangeForm(i, "savePosition", e.target.value)} value={form[i].savePosition} size={1} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                        <option value="yes">Yes</option>
+                        <option value="no">No</option>
+                      </select>
+                    </div>
                   </>
                   }
 
@@ -173,6 +181,7 @@ function App() {
                     isOpen[i] &&
                     <WindowComponent
                       onUnload={() => closeWindow(i)}
+                      savePosition={form[i].savePosition === "yes"}
                       isWindow={form[i].isWindow === "yes"}
                       component={selectComponent(form[i].isWindow === "yes", form[i].component, i)}
                       features={{ left: element.availLeft, top: element.availTop, width: selectSize(form[i].size,element.availWidth), height:selectSize(form[i].size,element.availHeight)}}

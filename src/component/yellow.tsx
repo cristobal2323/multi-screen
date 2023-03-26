@@ -8,12 +8,12 @@ interface Props {
     state?: {
         isWindow: boolean;
         closeWindow?: () => void
-        message: string;
+        message?: string;
     },
 }
 
 
-export const GreenComponent: FC<Props> = ({ state }) => {
+export const YellowComponent: FC<Props> = ({ state }) => {
     const location = useLocation();
     const navigate = useNavigate();
     const stateFinal = location.state || state;
@@ -23,7 +23,7 @@ export const GreenComponent: FC<Props> = ({ state }) => {
 
 
     return (
-        <div id="container" className="bg-green-500 w-full h-screen">
+        <div id="container" className="bg-yellow-500 w-full h-screen">
             {
                 stateFinal?.message &&
                 <h1>{stateFinal.message}</h1>
@@ -55,9 +55,9 @@ export const GreenComponent: FC<Props> = ({ state }) => {
 
                 open &&
                 <WindowComponent
-                    savePosition={false}
                     onUnload={() => setOpen(false)}
                     isWindow={true}
+                    savePosition={false}
                     component={<div><h1>New window</h1></div>}
                     features={{ left: 0, top: 0, width: 300, height: 300 }}
                     title={`window test`}

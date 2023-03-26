@@ -52,7 +52,7 @@ export const getScreensInfo = async () : Promise<GetScreensInfoReturnType> => {
             try{
             const cachedScreens = await window.getScreenDetails();
             if(!cachedScreens){
-              return cachedScreens.screens;
+              return null;
             }
             return cachedScreens.screens;
             }catch(e){

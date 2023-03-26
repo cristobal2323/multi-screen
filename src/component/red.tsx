@@ -15,6 +15,7 @@ export const RedComponent: FC<Props> = ({state}) => {
     const location = useLocation();
     const navigate = useNavigate();
     const stateFinal = location.state || state;
+    
     return (
         <div id="container" className="bg-red-500 w-full h-screen">
             {
