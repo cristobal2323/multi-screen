@@ -13,6 +13,7 @@ import WindowComponent from "./windows"
 import { RedComponent, GreenComponent, BlueComponent } from "./component"
 
 import './App.css'
+import { useMonitor } from './context/monitorContext';
 
 
 type Form = {
@@ -27,6 +28,7 @@ function App() {
   const [monitors, setMonitors] = useState<IScreen[] | null>([]);
   const [isOpen, setIsOpen] = useState<Boolean[]>([]);
   const [form, setForm] = useState<Form[]>([]);
+  const { test, setTest} = useMonitor();
 
 
 
@@ -79,7 +81,7 @@ function App() {
   const selectComponent = (isWindow:boolean, component: string, index: number) : React.ReactElement => {
     if(isWindow){
       if(component === "red"){
-        return <RedComponent state={{isWindow, closeWindow:()=>closeWindow(index), message: form[index].message}} />
+        return <RedComponent state={{isWindow, closeWindow:()=>closeWindow(index), message: form[index].message, onchangeForm: onchangeForm, index: index}} />
       }else if(component === "blue"){
         return <BlueComponent state={{isWindow, closeWindow:()=>closeWindow(index), message: form[index].message}} />
       }else{
@@ -101,7 +103,8 @@ function App() {
 
   return (
     <div className="App">
-      <h1 className="text-3xl font-bold underline mb-10">My Monitors</h1>
+      <h1 className="text-3xl font-bold underline mb-10">My Monitors { test }</h1>
+      <input type="text" id="default-input" onChange={(e) => setTest(e.target.value)} value={test} className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
       {
         monitors !== null ?
         <div className="flex justify-center gap-3">
